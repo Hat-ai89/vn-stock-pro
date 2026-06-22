@@ -1,0 +1,16 @@
+{
+  "name": "VN-Stock Pro - Bảng giá & Quản lý Đầu tư",
+  "short_name": "VN-Stock Pro",
+  "description": "Bảng giá trực tuyến & Hệ thống Quản lý Đầu tư chứng khoán Việt Nam",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#161a1e",
+  "theme_color": "#161a1e",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
