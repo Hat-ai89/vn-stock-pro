@@ -535,6 +535,20 @@ export default function AssetAnalytics({ portfolio, bonds = [], stocks, cash, da
     return () => performanceChartRef.current?.destroy();
   }, [groupBy]);
 
+  // Nhấp nháy khi NAV thay đổi (đồng bộ cảm giác "sống" với vòng lặp live-tick mỗi 3.5s)
+  const prevNavRef = useRef<number | null>(null);
+  const [navFlash, setNavFlash] = useState<"up" | "down" | null>(null);
+
+  useEffect(() => {
+    if (prevNavRef.current !== null && prevNavRef.current !== navValue) {
+      setNavFlash(navValue > prevNavRef.current ? "up" : "down");
+      const timer = setTimeout(() => setNavFlash(null), 700);
+      prevNavRef.current = navValue;
+      return () => clearTimeout(timer);
+    }
+    prevNavRef.current = navValue;
+  }, [navValue]);
+
   return (
     <div className="space-y-6">
       {/* 1. SCORECARD METRICS ROW */}
@@ -544,9 +558,12 @@ export default function AssetAnalytics({ portfolio, bonds = [], stocks, cash, da
             <Briefcase className="w-3.5 h-3.5 text-tech-green mr-1.5" />
             Tài sản ròng (NAV)
           </p>
-          <p className="text-sm font-extrabold font-mono text-tech-green mt-0.5">{formatVND(navValue)}</p>
+          <p className={`text-sm font-extrabold font-mono text-tech-green mt-0.5 transition-colors duration-300 rounded px-1 -mx-1 ${
+            navFlash === "up" ? "bg-tech-green/30" : navFlash === "down" ? "bg-tech-red/30" : ""
+          }`}>{formatVND(navValue)}</p>
           <p className="text-[10px] text-text-muted font-semibold uppercase mt-1">CP: {formatVND(stockValue)} · TP: {formatVND(bondValue)} · TM: {formatVND(cash)}</p>
         </div>
+
 
         <div className="bg-card-main p-4 rounded border border-border-main hover:border-tech-green/40 transition-colors select-none">
           <p className="text-[10px] text-text-muted uppercase font-extrabold tracking-widest flex items-center mb-1">
