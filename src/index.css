@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bg-main: #0b0e11;
+  --color-card-main: #151a21;
+  --color-border-main: #2b3139;
+  --color-text-muted: #848e9c;
+  --color-tech-green: #0ecb81;
+  --color-tech-red: #f6465d;
+  --color-tech-yellow: #f0b90b;
+  --color-tech-purple: #a855f7;
+  --color-tech-blue: #3b82f6;
+
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "Courier New", monospace;
+}
+
+/* Custom CSS Scrollbar and styling utilities to match Technical Grid design */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0e11;
+}
+::-webkit-scrollbar-thumb {
+  background: #2b3139;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #474d57;
+}
+
+/* Technical Chart.js and Data grid layouts */
+body {
+  background-color: #0b0e11;
+  color: #eaeaeb;
+}

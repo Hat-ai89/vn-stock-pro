@@ -1,0 +1,6 @@
+{
+  "name": "VN-Stock Pro Trading Terminal",
+  "description": "Hệ thống Bảng giá trực tuyến, Phân tích Kỹ thuật, Quản lý tài sản ròng NAV và Sao kê Giao dịch Chuyên nghiệp cho thị trường Việt Nam.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
