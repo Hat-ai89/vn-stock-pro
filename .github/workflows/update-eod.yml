@@ -1,0 +1,45 @@
+name: Cập nhật giá đóng cửa (EOD) tự động
+
+# Chạy tự động hàng ngày lúc 15:35 giờ Việt Nam (08:35 UTC),
+# sau khi HOSE đóng cửa (15:00) + thời gian khớp ATC.
+# Cũng có thể chạy thủ công qua tab "Actions" trên GitHub ("Run workflow").
+on:
+  schedule:
+    - cron: "35 8 * * 1-5" # Thứ 2 - Thứ 6, 08:35 UTC = 15:35 ICT
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update-eod-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Cài đặt dependencies
+        run: npm install
+
+      - name: Cài đặt Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Chạy script lấy giá thật
+        run: npm run update-eod
+
+      - name: Commit & push nếu có thay đổi
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet public/eod-data.json; then
+            echo "Không có thay đổi giá hôm nay, bỏ qua commit."
+          else
+            git add public/eod-data.json
+            git commit -m "chore: cập nhật giá EOD tự động $(date -u +'%Y-%m-%d')"
+            git push
+          fi
